@@ -4,7 +4,7 @@
 [![Rank](https://make.fun/badge/news-image-20261120/bapenven-ctrl/news-image-20nov/rank.svg)](https://make.fun/c/news-image-20261120)
 [![Reward](https://make.fun/badge/news-image-20261120/bapenven-ctrl/news-image-20nov/reward.svg)](https://make.fun/c/news-image-20261120)
 
-One page of world news for **Friday 20 November 2026**: 49 stories, every one
+One page of world news for **Friday 20 November 2026**: 45 stories, every one
 of them reported that day, in at least one time zone.
 
 ## What is on the page
