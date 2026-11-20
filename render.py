@@ -449,7 +449,7 @@ CARDS = [
          headline="COP31 reaches its final day with no deal",
          summary="The draft drops fossil fuels and the $120bn figure; overtime looms.",
          source="AFP · REUTERS", tag=""),
-    dict(num=7, place="JAZAN", topic="MIDDLE EAST", region="MIDEAST", scene=scene_saudi,
+    dict(num=7, place="JAZAN", topic="MIDEAST", region="MIDEAST", scene=scene_saudi,
          headline="Saudi defences intercept Houthi missile",
          summary="A ballistic missile was destroyed over the south; strikes on Sanaa reported.",
          source="REUTERS", tag="CLAIM"),
