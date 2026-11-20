@@ -507,14 +507,10 @@ BRIEFS = [
     (39, "Ohio", "E. coli outbreak at Ohio University grows to 17 confirmed cases, all students. (FSN)"),
     (40, "Basel", "BioVersys reports Phase 2a results for its AlpE tuberculosis regimen. (BioVersys)"),
     (41, "Sydney", "Marathon champion Jepchirchir is banned 3 years for doping; Sydney title stripped. (ABC)"),
-    (42, "Europe", "Youth climate action day held across 25+ European countries on Friday. (OneTurn)"),
-    (43, "Antalya", "Host Turkey banks $26bn in side deals as COP31 diplomacy stalls. (Reuters)"),
-    (44, "Bhubaneswar", "Odisha's assembly is adjourned until 23 Nov because of Cyclone Akvan. (Indian press)"),
-    (45, "Surabaya", "Officers at Juanda stop two Indonesians suspected of leaving to fight for Russia."),
-    (46, "Global", "GTA VI: The Album is released Friday with 34 original tracks. (Our Culture) CLAIM"),
-    (47, "Brussels", "EU's Kallas says she will summon Russia's envoy over embassy damage. CLAIM"),
-    (48, "Buenos Aires", "Argentina's Senate approves a permanent disability framework, 71 in favour. CLAIM"),
-    (49, "Washington", "US sanctions target the Comancheros gang and the 'Ndrangheta. CLAIM"),
+    (42, "Antalya", "Host Turkey banks $26bn in side deals as COP31 diplomacy stalls. (Reuters)"),
+    (43, "Bhubaneswar", "Odisha's assembly is adjourned until 23 Nov because of Cyclone Akvan. (Indian press)"),
+    (44, "Surabaya", "Officers at Juanda stop two Indonesians suspected of leaving to fight for Russia."),
+    (45, "Global", "GTA VI: The Album is released Friday with 34 original tracks. (Our Culture) CLAIM"),
 ]
 FIGURES = [
     ("370,000", "evacuated ahead of Cyclone Akvan"),
@@ -535,11 +531,11 @@ CW = W - 2 * MX  # 992
 # masthead
 f = F(SANS_B, 12)
 d.text((MX, 12), "THE WORLD IN ONE PAGE", font=f, fill=INK)
-r = "49 STORIES · ALL DATED FRI 20 NOV"
+r = "45 STORIES · ALL DATED FRI 20 NOV"
 d.text((W - MX - tw(f, r), 12), r, font=f, fill=INK)
-d.line([MX, 30, W - MX, 30], fill=RULE, width=2)
-draw_fit("FRIDAY 20 NOVEMBER 2026", MX, 36, SERIF_B, 62, CW, 1, fill=INK)
-d.line([MX, 106, W - MX, 106], fill=RULE, width=2)
+d.line([MX, 27, W - MX, 27], fill=RULE, width=2)
+draw_fit("FRIDAY 20 NOVEMBER 2026", MX, 33, SERIF_B, 50, CW, 1, fill=INK)
+d.line([MX, 88, W - MX, 88], fill=RULE, width=2)
 
 # region bar (counts from data)
 from collections import Counter
@@ -549,8 +545,8 @@ for p in HEROES + CARDS:
 brief_regions = ["EUROPE", "WORLD", "EUROPE", "ASIA", "EUROPE", "OCEANIA", "ASIA", "ASIA", "EUROPE", "EUROPE",
                  "OCEANIA", "WORLD", "WORLD", "AMERICAS", "ASIA", "OCEANIA", "EUROPE", "OCEANIA", "OCEANIA",
                  "AMERICAS", "WORLD", "WORLD", "AFRICA", "AFRICA", "AFRICA", "AMERICAS", "EUROPE", "AFRICA",
-                 "EUROPE", "MIDEAST", "ASIA", "ASIA", "WORLD", "EUROPE", "AMERICAS", "AMERICAS"]
-assert len(brief_regions) == len(BRIEFS) == 36, (len(brief_regions), len(BRIEFS))
+                 "MIDEAST", "ASIA", "ASIA", "WORLD"]
+assert len(brief_regions) == len(BRIEFS) == 32, (len(brief_regions), len(BRIEFS))
 for rgn in brief_regions:
     cnt[rgn] += 1
 order = ["ASIA", "EUROPE", "AMERICAS", "MIDEAST", "AFRICA", "OCEANIA", "WORLD"]
@@ -558,30 +554,30 @@ names = {"ASIA": "ASIA-PACIFIC", "EUROPE": "EUROPE", "AMERICAS": "AMERICAS", "MI
          "AFRICA": "AFRICA", "OCEANIA": "OCEANIA", "WORLD": "WORLD / SPACE"}
 total = sum(cnt[o] for o in order)
 x = MX
-ybar = 112
+ybar = 96
 for o in order:
     wseg = int(CW * cnt[o] / total)
-    d.rectangle([x, ybar, x + wseg, ybar + 22], fill=REGION_COLORS[o])
+    d.rectangle([x, ybar, x + wseg, ybar + 20], fill=REGION_COLORS[o])
     lab = f"{names[o]} {cnt[o]}"
     for _sz in (11, 10, 9, 8):
         fl = F(SANS_B, _sz)
         if tw(fl, lab) < wseg - 4:
-            d.text((x + (wseg - tw(fl, lab)) / 2, ybar + 6), lab, font=fl, fill=(255, 255, 255))
+            d.text((x + (wseg - tw(fl, lab)) / 2, ybar + 5), lab, font=fl, fill=(255, 255, 255))
             break
     x += wseg
 
-# figures row
-yfig = 142
+# figures row (caption ends ~yfig+49; rule below at 182 keeps 9px clear — no strike-through)
+yfig = 124
 fw = CW // 5
 for i, (num, cap) in enumerate(FIGURES):
     fx = MX + i * fw
     if i:
-        d.line([fx - 6, yfig + 2, fx - 6, yfig + 34], fill=(180, 170, 150), width=1)
-    draw_fit(num, fx, yfig, SERIF_B, 27, fw - 12, 1, fill=(150, 40, 30) if i in (1, 2) else INK)
-    draw_fit(cap, fx, yfig + 32, SANS, 10, fw - 12, 2, fill=GREY, leading=1.05)
-d.line([MX, 184, W - MX, 184], fill=RULE, width=2)
+        d.line([fx - 6, yfig + 2, fx - 6, yfig + 38], fill=(180, 170, 150), width=1)
+    draw_fit(num, fx, yfig, SERIF_B, 22, fw - 12, 1, fill=(150, 40, 30) if i in (1, 2) else INK)
+    draw_fit(cap, fx, yfig + 28, SANS, 10, fw - 12, 2, fill=GREY, leading=1.05)
+d.line([MX, 182, W - MX, 182], fill=RULE, width=2)
 
-# heroes: y 192..386 (194 tall), widths 4:3:3
+# heroes: y 192..386 (194 tall, 10px margin above from rule at 182), widths 4:3:3
 HY, HH = 192, 194
 gaps = 12
 usable = CW - 2 * gaps
@@ -599,13 +595,13 @@ for p, wpx in zip(HEROES, hw):
     d.text((x + 7, HY + HH - 14), p["source"], font=F(SANS_B, 9), fill=(150, 40, 30))
     x += wpx + gaps
 
-# cards: two rows of five, y 394.. and 540.., 140 tall
-CY = 394
+# cards: two rows of five, y 398.. and 550.., 140 tall, 12px margin above each row
+CY = 398
 CHH = 140
 cgap = 10
 cw5 = (CW - 4 * cgap) // 5
 for row in range(2):
-    y = CY + row * (CHH + 8)
+    y = CY + row * (CHH + 12)
     for col in range(5):
         p = CARDS[row * 5 + col]
         x = MX + col * (cw5 + cgap)
@@ -619,8 +615,8 @@ for row in range(2):
         draw_fit(p["summary"], x + 6, ty + 1, SERIF, 9, cw5 - 12, 2, leading=1.08)
         d.text((x + 6, y + CHH - 12), p["source"], font=F(SANS_B, 8), fill=(150, 40, 30))
 
-# bottom band: map left, briefs right — y 690..952
-BY, BH = 690, 262
+# bottom band: map left, briefs right — y 706..954 (rule at 700, 10px below cards)
+BY, BH = 706, 248
 d.line([MX, BY - 6, W - MX, BY - 6], fill=RULE, width=2)
 MAPW = 296
 d.rectangle([MX, BY, MX + MAPW, BY + BH], fill=(233, 238, 244), outline=(120, 120, 120))
@@ -665,18 +661,18 @@ d.text((MX + 8, tl_y), "FRIDAY IN UTC", font=F(SANS_B, 10), fill=INK)
 draw_fit("00:49 Loyalty Islands quake M5.6 · 01:15 China holds lending rates · 02:00 Akvan crosses the Odisha coast · "
          "06:00 Tokyo closes −5.1% · 07:00 UK retail sales +0.7% · 10:00 Mumbai closes +898 points · 17:05 Dragon due to undock the ISS",
          MX + 8, tl_y + 14, SANS, 9, MAPW - 16, 6, fill=(40, 40, 40), leading=1.25)
-d.text((MX + 8, BY + BH - 18), "Pins mark stories 1–13. Briefs 14–49 at right.", font=F(SANS, 9), fill=GREY)
+d.text((MX + 8, BY + BH - 18), "Pins mark stories 1–13. Briefs 14–45 at right.", font=F(SANS, 9), fill=GREY)
 
 # briefs: 3 columns x 12
 BX = MX + MAPW + 12
 BW3 = (W - MX - BX - 2 * 10) // 3
-d.text((BX, BY + 2), "MORE NEWS — 36 MORE STORIES", font=F(SANS_B, 13), fill=INK)
+d.text((BX, BY + 2), "MORE NEWS — 32 MORE STORIES", font=F(SANS_B, 13), fill=INK)
 d.line([BX, BY + 20, W - MX, BY + 20], fill=RULE, width=1)
-per_col = 12
+per_col = 11
 for i, (num, city, text) in enumerate(BRIEFS):
     col = i // per_col; row = i % per_col
     bx = BX + col * (BW3 + 10)
-    by = BY + 26 + row * 19
+    by = BY + 26 + row * 20
     head = f"{num} · {city} — "
     fb = F(SANS_B, 9)
     d.text((bx, by), head, font=fb, fill=INK)
@@ -692,15 +688,25 @@ for i, (num, city, text) in enumerate(BRIEFS):
         yy += 9.5
     d.text((bx, by), head, font=fb, fill=INK)
 
-# date check band
-DY = 960
-d.rectangle([MX, DY, W - MX, DY + 50], fill=NAVY)
+# date check band — 3 style variants (DATECHECK env): dark (current), cream, red
+DY = 962
+DC_STYLE = os.environ.get("DATECHECK", "dark")
+DC_STYLES = {
+    # v1 "hitam": deep navy band, white title, pale body (perlakuan saat ini)
+    "dark":  dict(fill=NAVY, outline=None, title=(255, 255, 255), body=(210, 218, 230)),
+    # v2 "krem": nada kertas masthead, teks tinta gelap, bingkai garis tegas
+    "cream": dict(fill=(252, 248, 238), outline=RULE, title=INK, body=(45, 45, 45)),
+    # v3 "merah aksen": merah tua yang sama dengan angka figur & label sumber
+    "red":   dict(fill=(150, 40, 30), outline=None, title=(255, 255, 255), body=(252, 228, 218)),
+}
+dc = DC_STYLES[DC_STYLE]
+d.rectangle([MX, DY, W - MX, DY + 48], fill=dc["fill"], outline=dc["outline"], width=2 if dc["outline"] else 1)
 d.text((MX + 8, DY + 5), "DATE CHECK — Every story above happened, or was first reported, on Friday 20 November 2026, in at least one time zone.",
-       font=F(SANS_B, 10), fill=(255, 255, 255))
-draw_fit(EXCLUSIONS, MX + 8, DY + 19, SANS, 8, CW - 16, 3, fill=(210, 218, 230), leading=1.15)
-d.text((MX, H - 12), "Sources: Reuters · AP · AFP · Al Jazeera · CNN · IMD · BBC · Yonhap · USGS. Original flat illustrations.",
+       font=F(SANS_B, 10), fill=dc["title"])
+draw_fit(EXCLUSIONS, MX + 8, DY + 19, SANS, 8, CW - 16, 3, fill=dc["body"], leading=1.15)
+d.text((MX, H - 10), "Sources: Reuters · AP · AFP · Al Jazeera · CNN · IMD · BBC · Yonhap · USGS. Original flat illustrations.",
        font=F(SANS, 8), fill=GREY)
 
-out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "entry.png")
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.environ.get("OUT_PNG", "entry.png"))
 img.save(out, optimize=True)
 print("saved", out, os.path.getsize(out), "bytes")
