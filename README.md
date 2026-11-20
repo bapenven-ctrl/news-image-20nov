@@ -4,7 +4,7 @@
 [![Rank](https://make.fun/badge/news-image-20261120/bapenven-ctrl/news-image-20nov/rank.svg)](https://make.fun/c/news-image-20261120)
 [![Reward](https://make.fun/badge/news-image-20261120/bapenven-ctrl/news-image-20nov/reward.svg)](https://make.fun/c/news-image-20261120)
 
-One page of world news for **Friday 20 November 2026**: 45 stories, every one
+One page of world news for **Friday 20 November 2026**: 41 stories, every one
 of them reported that day, in at least one time zone.
 
 ## What is on the page
@@ -18,7 +18,7 @@ of them reported that day, in at least one time zone.
   missile, Iraqi forces in Jurf al-Sakhar, Pakistan's minister in New Delhi,
   Signal blocking screenshots, Pakistan's series win in Rawalpindi,
   Prabowo–Xi in Shenzhen, and Seoul's move to impeach the chief justice.
-- **36 briefs**, a dotted world map with pins for stories 1–13, a "Friday in
+- **28 briefs**, a dotted world map with pins for stories 1–13, a "Friday in
   UTC" timeline, and a printed **DATE CHECK** box listing the stories that
   were checked and deliberately *not* shown as Friday's news (among them the
   Trump–Iran interviews of Thu 19 Nov and Voyager 1's one-light-day milestone

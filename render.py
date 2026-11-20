@@ -279,15 +279,16 @@ def scene_iraq(x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(232, 214, 178))
     gy = y + int(h * .78)
     d.rectangle([x, gy, x + w, y + h], fill=(198, 168, 118))
-    # compound wall + gate
-    d.rectangle([x + int(w * .55), y + int(h * .18), x + w - 6, gy], fill=(176, 148, 104))
-    d.rectangle([x + int(w * .55), y + int(h * .18), x + w - 6, y + int(h * .26)], fill=(150, 122, 80))
-    d.rectangle([x + int(w * .68), gy - 22, x + int(w * .8), gy], fill=(60, 54, 44))
-    # palm
-    px = x + int(w * .9)
-    d.line([px, gy, px + 2, gy - 30], fill=(100, 78, 46), width=3)
-    for a in range(5):
-        d.arc([px - 14 + a * 4, gy - 44, px + 12 + a * 4, gy - 26], 300, 60, fill=(60, 120, 66), width=2)
+    # compound wall + watchtower + open gate (troops entering the stronghold)
+    d.rectangle([x + int(w * .52), y + int(h * .22), x + w - 6, gy], fill=(176, 148, 104))
+    d.rectangle([x + int(w * .52), y + int(h * .22), x + w - 6, y + int(h * .30)], fill=(150, 122, 80))
+    tx = x + int(w * .80)
+    d.rectangle([tx, y + int(h * .04), tx + 16, gy - 10], fill=(160, 132, 92))
+    d.polygon([(tx - 3, y + int(h * .04)), (tx + 8, y - 2), (tx + 19, y + int(h * .04))], fill=(110, 84, 54))
+    d.rectangle([tx + 4, y + int(h * .10), tx + 12, y + int(h * .20)], fill=(52, 48, 40))
+    # gate: one leaf swung open, vehicle passing through the gap
+    d.rectangle([x + int(w * .52), gy - 20, x + int(w * .60), gy], fill=(60, 54, 44))
+    d.polygon([(x + int(w * .86), gy - 20), (x + w - 6, gy - 26), (x + w - 6, gy - 4), (x + int(w * .86), gy)], fill=(74, 66, 54))
     # armoured vehicles convoy
     for i, fx in enumerate((0.04, 0.26)):
         vx = x + int(w * fx); vy = gy - 14
@@ -296,20 +297,32 @@ def scene_iraq(x, y, w, h):
         d.line([vx + 24, vy - 4, vx + 34, vy - 8], fill=(70, 74, 58), width=2)
         d.ellipse([vx + 4, vy + 8, vx + 12, vy + 15], fill=(40, 40, 40))
         d.ellipse([vx + 22, vy + 8, vx + 30, vy + 15], fill=(40, 40, 40))
+    # soldiers on foot walking toward the gate (drawn last, in front of the convoy)
+    for fx in (0.44, 0.485):
+        sx = x + int(w * fx); sy = gy - 1
+        d.ellipse([sx, sy - 14, sx + 6, sy - 8], fill=(198, 152, 108))
+        d.rectangle([sx - 1, sy - 8, sx + 7, sy], fill=(70, 84, 54))
+        d.line([sx + 6, sy - 6, sx + 11, sy - 10], fill=(50, 50, 44), width=2)
 
 def scene_delhi(x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(214, 226, 238))
     gy = y + int(h * .8)
+    # India Gate silhouette behind the meeting (New Delhi landmark)
+    gx = x + w // 2
+    d.rectangle([gx - 34, gy - 40, gx + 34, gy], fill=(196, 168, 128))
+    d.rectangle([gx - 38, gy - 44, gx + 38, gy - 38], fill=(178, 148, 106))
+    d.pieslice([gx - 13, gy - 34, gx + 13, gy - 8], 180, 360, fill=(214, 226, 238))
+    d.rectangle([gx - 13, gy - 21, gx + 13, gy], fill=(214, 226, 238))
     # red carpet
     d.polygon([(x + int(w * .3), y + h), (x + int(w * .46), gy), (x + int(w * .6), gy), (x + int(w * .78), y + h)], fill=(178, 40, 52))
-    # plane tail behind
-    d.polygon([(x + int(w * .06), gy - 34), (x + int(w * .2), gy - 34), (x + int(w * .14), gy - 52)], fill=(230, 230, 235), outline=(140, 150, 165))
-    # minister figure walking
-    mx = x + int(w * .5)
-    d.ellipse([mx - 5, gy - 34, mx + 5, gy - 24], fill=(150, 108, 74))
-    d.rectangle([mx - 6, gy - 24, mx + 6, gy - 8], fill=(34, 40, 60))
-    d.line([mx - 3, gy - 8, mx - 6, gy + 2], fill=(34, 40, 60), width=3)
-    d.line([mx + 3, gy - 8, mx + 7, gy + 2], fill=(34, 40, 60), width=3)
+    # two ministers shaking hands at the centre of the carpet
+    for sgn, skin in ((-1, (232, 198, 160)), (1, (150, 108, 74))):
+        mx = gx + sgn * 13
+        d.ellipse([mx - 5, gy - 32, mx + 5, gy - 22], fill=skin)
+        d.rectangle([mx - 6, gy - 22, mx + 6, gy - 7], fill=(34, 40, 60))
+        d.line([mx - 3, gy - 7, mx - 5, gy + 2], fill=(34, 40, 60), width=3)
+        d.line([mx + 3, gy - 7, mx + 5, gy + 2], fill=(34, 40, 60), width=3)
+        d.line([mx - sgn * 5, gy - 18, gx, gy - 13], fill=skin, width=3)
     # flags India & Pakistan
     def flag_in(bx, by):
         d.rectangle([bx, by, bx + 26, by + 6], fill=(240, 140, 50))
@@ -353,20 +366,40 @@ def scene_cricket(x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(168, 208, 160))
     gy = y + int(h * .8)
     d.rectangle([x, gy, x + w, y + h], fill=(196, 172, 110))
-    # stadium arc
-    d.arc([x - 20, y - int(h * .5), x + w + 20, y + int(h * .55)], 20, 160, fill=(240, 240, 240), width=5)
-    d.arc([x - 20, y - int(h * .42), x + w + 20, y + int(h * .6)], 20, 160, fill=(200, 60, 60), width=3)
-    # batsman
-    bx = x + int(w * .42)
+    # crowd in the stands: plain dot rows, no banner
+    for r_ in range(2):
+        for i in range(22):
+            cxp = x + 6 + i * int((w - 12) / 21); cyp = y + 3 + r_ * 6
+            d.ellipse([cxp, cyp, cxp + 3, cyp + 3], fill=(90, 110, 90) if (i + r_) % 3 else (240, 240, 240))
+    d.line([x, y + 15, x + w, y + 15], fill=(120, 150, 110), width=2)
+    # the chase: bowler (left) has just delivered; batsman in green (right) plays the shot;
+    # his partner runs between the wickets — the winning chase, told as a match scene
+    # bowler
+    wx = x + int(w * .14)
+    d.ellipse([wx, gy - 36, wx + 8, gy - 28], fill=(120, 82, 54))
+    d.rectangle([wx + 1, gy - 28, wx + 8, gy - 13], fill=(150, 30, 40))
+    d.line([wx + 7, gy - 26, wx + 15, gy - 34], fill=(120, 82, 54), width=3)  # bowling arm up
+    d.line([wx + 3, gy - 13, wx - 2, gy], fill=(240, 240, 245), width=3)
+    d.line([wx + 6, gy - 13, wx + 12, gy], fill=(240, 240, 245), width=3)
+    # ball in flight
+    d.ellipse([x + int(w * .40), gy - 30, x + int(w * .40) + 5, gy - 25], fill=(200, 40, 40))
+    # running partner, mid-pitch, bat in hand
+    rx = x + int(w * .56)
+    d.ellipse([rx, gy - 32, rx + 8, gy - 24], fill=(198, 152, 108))
+    d.rectangle([rx + 1, gy - 24, rx + 8, gy - 11], fill=(20, 110, 60))
+    d.line([rx + 2, gy - 11, rx - 3, gy], fill=(240, 240, 245), width=3)
+    d.line([rx + 7, gy - 11, rx + 12, gy - 1], fill=(240, 240, 245), width=3)
+    d.line([rx + 8, gy - 20, rx + 15, gy - 12], fill=(196, 164, 100), width=3)  # carried bat
+    # batsman in Pakistan green, shot played
+    bx = x + int(w * .76)
     d.ellipse([bx, gy - 34, bx + 9, gy - 25], fill=(120, 82, 54))
-    d.rectangle([bx + 1, gy - 25, bx + 9, gy - 10], fill=(240, 240, 245))
-    d.line([bx + 8, gy - 22, bx + 22, gy - 34], fill=(120, 82, 54), width=3)  # bat arm
-    d.line([bx + 20, gy - 36, bx + 28, gy - 20], fill=(196, 164, 100), width=3)  # bat
+    d.rectangle([bx + 1, gy - 25, bx + 9, gy - 10], fill=(20, 110, 60))
+    d.line([bx + 8, gy - 22, bx + 20, gy - 32], fill=(120, 82, 54), width=3)  # bat arm
+    d.line([bx + 18, gy - 34, bx + 25, gy - 19], fill=(196, 164, 100), width=3)  # bat
     d.line([bx + 3, gy - 10, bx - 2, gy], fill=(240, 240, 245), width=3)
     d.line([bx + 7, gy - 10, bx + 13, gy], fill=(240, 240, 245), width=3)
-    # ball + stumps
-    d.ellipse([x + int(w * .68), gy - 30, x + int(w * .68) + 6, gy - 24], fill=(200, 40, 40))
-    sx = x + int(w * .82)
+    # stumps behind the batsman
+    sx = x + int(w * .90)
     for i in range(3):
         d.rectangle([sx + i * 5, gy - 16, sx + i * 5 + 2, gy], fill=(230, 200, 90))
 
@@ -488,7 +521,7 @@ BRIEFS = [
     (20, "Tokyo", "Japan's October inflation printed 2.3%, core 2.2%, in data released Friday. (Dow Jones)"),
     (21, "Beijing", "China holds lending rates for an 18th month: 1-year 3.0%, 5-year 3.5%. (Reuters)"),
     (22, "London", "UK retail sales rose 0.7% in October, beating every forecast. (Reuters · ONS)"),
-    (23, "Frankfurt", "STOXX 600 fell 1% on Friday morning, heading for its worst week since March. (Reuters)"),
+    (23, "Frankfurt", "STOXX 600 fell 1% on Friday; worst week since March looms. (Reuters)"),
     (24, "Sydney", "ASX 200 closed −1.6% for a seventh straight loss; worst week since 2022. (WSJ)"),
     (25, "London", "Brent slipped to $91.03 on Friday, set for a third straight weekly decline. (Reuters)"),
     (26, "Markets", "Gold slid on Friday toward a 7–8% weekly loss, near $3,600 an ounce. (Reuters)"),
@@ -499,18 +532,14 @@ BRIEFS = [
     (31, "Loyalty Is.", "M5.6 quake southeast of the Loyalty Islands at 00:49 UTC; no tsunami threat. (USGS)"),
     (32, "Madang", "M5.1 quake near Madang, Papua New Guinea, at 05:17 UTC; felt by ~810,000. (GFZ)"),
     (33, "Florida", "Flash flood warning for Brevard County after 2.5 inches of rain. (NWS)"),
-    (34, "Orbit", "SpaceX Dragon due to undock the ISS Friday with 6,300 lb of science. (NASA)"),
-    (35, "Global", "Tire chemicals found in human bodies on four continents, a review finds. (ACS)"),
-    (36, "Pretoria", "581 women were killed in South Africa in July–September, Friday's statistics show. (BBC)"),
-    (37, "Lesotho", "11 arrested at the border gate, incl. officials and police, in a graft probe. (SAnews)"),
-    (38, "Busia", "Kenya's Ruto mocks the opposition after its walkout from an IEBC meeting. (People Daily)"),
-    (39, "Ohio", "E. coli outbreak at Ohio University grows to 17 confirmed cases, all students. (FSN)"),
-    (40, "Basel", "BioVersys reports Phase 2a results for its AlpE tuberculosis regimen. (BioVersys)"),
-    (41, "Sydney", "Marathon champion Jepchirchir is banned 3 years for doping; Sydney title stripped. (ABC)"),
-    (42, "Antalya", "Host Turkey banks $26bn in side deals as COP31 diplomacy stalls. (Reuters)"),
-    (43, "Bhubaneswar", "Odisha's assembly is adjourned until 23 Nov because of Cyclone Akvan. (Indian press)"),
-    (44, "Surabaya", "Officers at Juanda stop two Indonesians suspected of leaving to fight for Russia."),
-    (45, "Global", "GTA VI: The Album is released Friday with 34 original tracks. (Our Culture) CLAIM"),
+    (34, "Pretoria", "581 women were killed in South Africa in July–September, Friday's statistics show. (BBC)"),
+    (35, "Lesotho", "11 arrested at the border gate, incl. officials and police, in a graft probe. (SAnews)"),
+    (36, "Ohio", "E. coli outbreak at Ohio University grows to 17 confirmed cases, all students. (FSN)"),
+    (37, "Basel", "BioVersys reports Phase 2a results for its AlpE tuberculosis regimen. (BioVersys)"),
+    (38, "Sydney", "Marathon champion Jepchirchir is banned 3 years for doping; Sydney title stripped. (ABC)"),
+    (39, "Antalya", "Host Turkey banks $26bn in side deals as COP31 diplomacy stalls. (Reuters)"),
+    (40, "Bhubaneswar", "Assembly is adjourned until 23 Nov; 370,000 evacuated for Akvan. (Indian press)"),
+    (41, "Global", "GTA VI: The Album is released Friday with 34 original tracks. (Our Culture) CLAIM"),
 ]
 FIGURES = [
     ("370,000", "evacuated ahead of Cyclone Akvan"),
@@ -531,7 +560,7 @@ CW = W - 2 * MX  # 992
 # masthead
 f = F(SANS_B, 12)
 d.text((MX, 12), "THE WORLD IN ONE PAGE", font=f, fill=INK)
-r = "45 STORIES · ALL DATED FRI 20 NOV"
+r = "41 STORIES · ALL DATED FRI 20 NOV"
 d.text((W - MX - tw(f, r), 12), r, font=f, fill=INK)
 d.line([MX, 27, W - MX, 27], fill=RULE, width=2)
 draw_fit("FRIDAY 20 NOVEMBER 2026", MX, 33, SERIF_B, 50, CW, 1, fill=INK)
@@ -544,9 +573,8 @@ for p in HEROES + CARDS:
     cnt[p["region"]] += 1
 brief_regions = ["EUROPE", "WORLD", "EUROPE", "ASIA", "EUROPE", "OCEANIA", "ASIA", "ASIA", "EUROPE", "EUROPE",
                  "OCEANIA", "WORLD", "WORLD", "AMERICAS", "ASIA", "OCEANIA", "EUROPE", "OCEANIA", "OCEANIA",
-                 "AMERICAS", "WORLD", "WORLD", "AFRICA", "AFRICA", "AFRICA", "AMERICAS", "EUROPE", "AFRICA",
-                 "MIDEAST", "ASIA", "ASIA", "WORLD"]
-assert len(brief_regions) == len(BRIEFS) == 32, (len(brief_regions), len(BRIEFS))
+                 "AMERICAS", "AFRICA", "AFRICA", "AMERICAS", "EUROPE", "AFRICA", "MIDEAST", "ASIA", "WORLD"]
+assert len(brief_regions) == len(BRIEFS) == 28, (len(brief_regions), len(BRIEFS))
 for rgn in brief_regions:
     cnt[rgn] += 1
 order = ["ASIA", "EUROPE", "AMERICAS", "MIDEAST", "AFRICA", "OCEANIA", "WORLD"]
@@ -566,15 +594,45 @@ for o in order:
             break
     x += wseg
 
-# figures row (caption ends ~yfig+49; rule below at 182 keeps 9px clear — no strike-through)
+# figures row (captions end by ~yfig+52; rule below at 182 keeps clear space — no strike-through)
 yfig = 124
-fw = CW // 5
+FIGW = [264, 182, 182, 182, 182]  # first figure is the hero stat: wider cell
+assert sum(FIGW) == CW
+fx = MX
 for i, (num, cap) in enumerate(FIGURES):
-    fx = MX + i * fw
-    if i:
-        d.line([fx - 6, yfig + 2, fx - 6, yfig + 38], fill=(180, 170, 150), width=1)
-    draw_fit(num, fx, yfig, SERIF_B, 22, fw - 12, 1, fill=(150, 40, 30) if i in (1, 2) else INK)
-    draw_fit(cap, fx, yfig + 28, SANS, 10, fw - 12, 2, fill=GREY, leading=1.05)
+    fw = FIGW[i]
+    if i == 0:
+        # HERO FIGURE 370,000: tinted panel + big accent number + mini evacuation scene,
+        # so the wide cell reads as a story, not an empty stat (Keva 19:18)
+        d.rectangle([fx, yfig - 2, fx + fw - 8, yfig + 54], fill=(238, 242, 246), outline=NAVY, width=1)
+        draw_fit(num, fx + 8, yfig + 1, SERIF_B, 29, 150, 1, fill=(150, 40, 30))
+        draw_fit("people evacuated ahead of Cyclone Akvan (IMD)", fx + 8, yfig + 34, SANS_B, 9, 148, 2,
+                 fill=INK, leading=1.05)
+        # mini scene: Odisha coast — sky, sea, houses, evacuees walking with bundles, cyclone swirl
+        sx, sy, sw, sh = fx + 162, yfig + 3, 88, 48
+        d.rectangle([sx, sy, sx + sw, sy + sh], fill=(168, 205, 226))
+        d.rectangle([sx, sy + 30, sx + sw, sy + sh], fill=(43, 108, 160))
+        for rr, col in [(11, (240, 244, 246)), (7, (203, 220, 232)), (4, (120, 150, 175))]:
+            d.ellipse([sx + 14 - rr, sy + 11 - rr, sx + 14 + rr, sy + 11 + rr], fill=col)
+        d.polygon([(sx + 44, sy + 51), (sx + 62, sy + 28), (sx + sw, sy + 34), (sx + sw, sy + 51)], fill=(214, 186, 130))
+        for hx in (58, 74):
+            bx = sx + hx; by = sy + 26
+            d.rectangle([bx, by, bx + 11, by + 8], fill=(150, 84, 52))
+            d.polygon([(bx - 2, by), (bx + 5, by - 5), (bx + 13, by)], fill=(96, 52, 32))
+        for j, ex in enumerate((30, 42, 54)):
+            ey = sy + 38 + (j % 2) * 3
+            d.ellipse([sx + ex, ey - 8, sx + ex + 5, ey - 3], fill=(120, 82, 54))
+            d.line([sx + ex + 2, ey - 3, sx + ex + 2, ey + 4], fill=(34, 40, 60), width=2)
+            d.rectangle([sx + ex + 5, ey - 6, sx + ex + 10, ey - 1], fill=(178, 40, 52))
+        for k in range(5):
+            wx = sx + 4 + k * 16
+            d.arc([wx, sy + 34, wx + 11, sy + 40], 180, 360, fill=(220, 238, 250), width=1)
+    else:
+        if i > 1:
+            d.line([fx - 6, yfig + 2, fx - 6, yfig + 38], fill=(180, 170, 150), width=1)
+        draw_fit(num, fx, yfig, SERIF_B, 22, fw - 12, 1, fill=(150, 40, 30) if i in (1, 2) else INK)
+        draw_fit(cap, fx, yfig + 28, SANS, 10, fw - 12, 2, fill=GREY, leading=1.05)
+    fx += fw
 d.line([MX, 182, W - MX, 182], fill=RULE, width=2)
 
 # heroes: y 192..386 (194 tall, 10px margin above from rule at 182), widths 4:3:3
@@ -659,20 +717,20 @@ for num, ci, ri in PINS:
 tl_y = BY + 104
 d.text((MX + 8, tl_y), "FRIDAY IN UTC", font=F(SANS_B, 10), fill=INK)
 draw_fit("00:49 Loyalty Islands quake M5.6 · 01:15 China holds lending rates · 02:00 Akvan crosses the Odisha coast · "
-         "06:00 Tokyo closes −5.1% · 07:00 UK retail sales +0.7% · 10:00 Mumbai closes +898 points · 17:05 Dragon due to undock the ISS",
+         "06:00 Tokyo closes −5.1% · 07:00 UK retail sales +0.7% · 09:00 Brent slips to $91.03 · 10:00 UK–EU reset agreed in Brussels",
          MX + 8, tl_y + 14, SANS, 9, MAPW - 16, 6, fill=(40, 40, 40), leading=1.25)
-d.text((MX + 8, BY + BH - 18), "Pins mark stories 1–13. Briefs 14–45 at right.", font=F(SANS, 9), fill=GREY)
+d.text((MX + 8, BY + BH - 18), "Pins mark stories 1–13. Briefs 14–41 at right.", font=F(SANS, 9), fill=GREY)
 
-# briefs: 3 columns x 12
+# briefs: 3 columns, 10 per column, pitch 22 (bottom margin under every brief)
 BX = MX + MAPW + 12
 BW3 = (W - MX - BX - 2 * 10) // 3
-d.text((BX, BY + 2), "MORE NEWS — 32 MORE STORIES", font=F(SANS_B, 13), fill=INK)
+d.text((BX, BY + 2), "MORE NEWS — 28 MORE STORIES", font=F(SANS_B, 13), fill=INK)
 d.line([BX, BY + 20, W - MX, BY + 20], fill=RULE, width=1)
-per_col = 11
+per_col = 10
 for i, (num, city, text) in enumerate(BRIEFS):
     col = i // per_col; row = i % per_col
     bx = BX + col * (BW3 + 10)
-    by = BY + 26 + row * 20
+    by = BY + 26 + row * 22
     head = f"{num} · {city} — "
     fb = F(SANS_B, 9)
     d.text((bx, by), head, font=fb, fill=INK)
@@ -688,22 +746,18 @@ for i, (num, city, text) in enumerate(BRIEFS):
         yy += 9.5
     d.text((bx, by), head, font=fb, fill=INK)
 
-# date check band — 3 style variants (DATECHECK env): dark (current), cream, red
+# date check band — FINAL design (Keva ronde 2, 19:17): V2 cream family, but with the
+# visual weight of an important box: strong dark-red frame, filled title chip, dark body.
 DY = 962
-DC_STYLE = os.environ.get("DATECHECK", "dark")
-DC_STYLES = {
-    # v1 "hitam": deep navy band, white title, pale body (perlakuan saat ini)
-    "dark":  dict(fill=NAVY, outline=None, title=(255, 255, 255), body=(210, 218, 230)),
-    # v2 "krem": nada kertas masthead, teks tinta gelap, bingkai garis tegas
-    "cream": dict(fill=(252, 248, 238), outline=RULE, title=INK, body=(45, 45, 45)),
-    # v3 "merah aksen": merah tua yang sama dengan angka figur & label sumber
-    "red":   dict(fill=(150, 40, 30), outline=None, title=(255, 255, 255), body=(252, 228, 218)),
-}
-dc = DC_STYLES[DC_STYLE]
-d.rectangle([MX, DY, W - MX, DY + 48], fill=dc["fill"], outline=dc["outline"], width=2 if dc["outline"] else 1)
-d.text((MX + 8, DY + 5), "DATE CHECK — Every story above happened, or was first reported, on Friday 20 November 2026, in at least one time zone.",
-       font=F(SANS_B, 10), fill=dc["title"])
-draw_fit(EXCLUSIONS, MX + 8, DY + 19, SANS, 8, CW - 16, 3, fill=dc["body"], leading=1.15)
+d.rectangle([MX, DY, W - MX, DY + 48], fill=(252, 248, 238), outline=(150, 40, 30), width=2)
+_chip_w = 116
+d.rectangle([MX + 6, DY + 4, MX + 6 + _chip_w, DY + 19], fill=(150, 40, 30))
+_ft = F(SANS_B, 11)
+_lab = "DATE CHECK"
+d.text((MX + 6 + (_chip_w - tw(_ft, _lab)) / 2, DY + 6), _lab, font=_ft, fill=(255, 255, 255))
+d.text((MX + 6 + _chip_w + 8, DY + 6), "Every story above happened, or was first reported, on Friday 20 November 2026, in at least one time zone.",
+       font=F(SANS_B, 10), fill=INK)
+draw_fit(EXCLUSIONS, MX + 8, DY + 21, SANS, 8, CW - 16, 3, fill=(30, 30, 30), leading=1.0)
 d.text((MX, H - 10), "Sources: Reuters · AP · AFP · Al Jazeera · CNN · IMD · BBC · Yonhap · USGS. Original flat illustrations.",
        font=F(SANS, 8), fill=GREY)
 

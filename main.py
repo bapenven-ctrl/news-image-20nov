@@ -2,7 +2,7 @@
 """news-image-20261120 entry: "The World in One Page — Friday 20 November 2026".
 
 The deliverable is entry.png, a one-page illustrated news sheet of Friday
-20 November 2026 (45 stories, all dated that day). This entrypoint simply
+20 November 2026 (41 stories, all dated that day). This entrypoint simply
 copies the pre-rendered sheet into the directory named by MAKEFUN_OUTPUT_DIR
 (or ./output). Standard library only.
 """
